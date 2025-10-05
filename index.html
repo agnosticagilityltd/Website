@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agnostic Agility - Coming Soon</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #FFFFFF;
+            color: #000000;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            position: relative;
+            z-index: 10;
+            background: #FFFFFF;
+            border-bottom: 1px solid #f0f0f0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #94598F, #655FA7);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(148, 89, 143, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #94598F;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+            border: none;
+            background: none;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .dropdown-toggle span {
+            width: 20px;
+            height: 2px;
+            background: #000000;
+            margin: 2px 0;
+            transition: 0.3s;
+            border-radius: 1px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #FFFFFF;
+            min-width: 180px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            z-index: 1000;
+            margin-top: 5px;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: dropdownFade 0.3s ease-out;
+        }
+
+        @keyframes dropdownFade {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-menu ul {
+            list-style: none;
+            padding: 8px 0;
+            margin: 0;
+        }
+
+        .dropdown-menu li {
+            padding: 0;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #000000;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 0;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f8f9fa;
+            color: #94598F;
+        }
+
+        .dropdown-menu li:first-child a {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .dropdown-menu li:last-child a {
+            border-radius: 0 0 8px 8px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #000000;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #FFFFFF;
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            padding: 20px 0;
+            margin: 0;
+        }
+
+        .mobile-nav li {
+            text-align: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .mobile-nav li:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-nav a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            color: #94598F;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 0 120px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(148, 89, 143, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(101, 95, 167, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            color: #000000;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #94598F;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #666666;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #94598F, #655FA7);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(148, 89, 143, 0.3);
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #94598F, #655FA7);
+            color: #FFFFFF;
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(148, 89, 143, 0.3);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(148, 89, 143, 0.4);
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 80px 0;
+            background: #f8f9fa;
+            margin: 60px 0;
+            border-radius: 20px;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: #000000;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: #FFFFFF;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #94598F, #655FA7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #94598F;
+        }
+
+        .feature-card p {
+            color: #666666;
+            line-height: 1.6;
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .newsletter h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #091841;
+        }
+
+        .newsletter p {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            color: #452C54;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            border: 2px solid rgba(148, 89, 143, 0.3);
+            border-radius: 50px;
+            background: #FFFFFF;
+            color: #091841;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+            box-shadow: 0 2px 10px rgba(9, 24, 65, 0.1);
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(69, 44, 84, 0.6);
+        }
+
+        .newsletter-form input:focus {
+            border-color: #94598F;
+        }
+
+        .newsletter-form button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #94598F, #655FA7);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(148, 89, 143, 0.4);
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: #FFFFFF;
+        }
+
+        .about h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: #000000;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            text-align: center;
+        }
+
+        .about-story .lead {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #94598F;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .about-story p {
+            font-size: 1.1rem;
+            color: #666666;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .core-values {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .core-values h3 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+            color: #000000;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .value-card {
+            background: #f8f9fa;
+            padding: 30px 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .value-icon svg {
+            width: 60px;
+            height: 60px;
+            transition: transform 0.3s ease;
+        }
+
+        .value-card:hover .value-icon svg {
+            transform: scale(1.1);
+        }
+
+        /* Animated SVG styles */
+        .flexible-branch {
+            animation: flexibleSway 4s ease-in-out infinite;
+        }
+
+        @keyframes flexibleSway {
+            0%, 100% { transform: translateX(0px); }
+            25% { transform: translateX(2px); }
+            50% { transform: translateX(-1px); }
+            75% { transform: translateX(1px); }
+        }
+
+        .people-pulse {
+            animation: peoplePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes peoplePulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        .trophy-glow {
+            animation: trophyGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes trophyGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .sparkle {
+            animation: sparkleShine 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkleShine {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .balance-indicator {
+            animation: balanceFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes balanceFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .value-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #94598F;
+            font-weight: 600;
+        }
+
+        .value-card p {
+            color: #666666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+            padding: 80px 0;
+            background: #f8f9fa;
+            border-radius: 20px;
+            margin: 60px 0;
+        }
+
+        .contact-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #000000;
+        }
+
+        .contact-section > p {
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+            color: #666666;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            background: #FFFFFF;
+            padding: 30px 20px;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #94598F;
+        }
+
+        .contact-item p {
+            color: #666666;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #e9ecef;
+            margin-top: 80px;
+        }
+
+        footer p {
+            color: #666666;
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            header {
+                position: relative;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .newsletter-form input {
+                min-width: 280px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #94598F, #655FA7);
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span>Agnostic Agility</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#socials">Socials</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+            <div class="dropdown">
+                <button class="dropdown-toggle" id="dropdownToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#socials">Socials</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+        <div class="mobile-nav" id="mobileNav">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#socials">Socials</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="coming-soon-badge">🚀 Coming Soon</div>
+                    <h1>Agnostic Agility</h1>
+                    <p class="tagline">Agility without dogma, delivery without burnout</p>
+                    <p class="subtitle">Balancing value, velocity, and humanity</p>
+                    <a href="#contact" class="contact-btn">Contact Us</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <h2>What We're Building</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Flexible Methodology</h3>
+                        <p>No rigid frameworks. Adapt project management approaches that work for your team's unique needs and culture.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Value-Driven Delivery</h3>
+                        <p>Focus on outcomes that matter. Track progress through meaningful metrics, not just velocity.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌱</div>
+                        <h3>Sustainable Pace</h3>
+                        <p>Build high-performing teams without burnout. Prioritize long-term success over short-term sprints.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">❤️</div>
+                        <h3>Human-Centric Approach</h3>
+                        <p>Put people first with wellness tracking, workload balancing, and mental health support to prevent burnout before it starts.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="container">
+                <h2>Why We Started Agnostic Agility</h2>
+                <div class="about-content">
+                    <div class="about-story">
+                        <p class="lead">In today's complex and volatile market conditions, we witnessed too many talented teams burning out while projects consistently ran late and over budget. Traditional project management frameworks weren't adapting fast enough to the reality of modern work.</p>
+                        <p>We founded Agnostic Agility because we believe there's a better way. A way that prioritizes human wellbeing alongside business outcomes. A way that adapts to your team's unique needs rather than forcing rigid methodologies. A way that delivers real value without sacrificing the mental health of your people.</p>
+                        <p>Our mission is simple: help teams achieve sustainable success by balancing velocity with humanity, and outcomes with wellbeing.</p>
+                    </div>
+                </div>
+                
+                <div class="core-values">
+                    <h3>Our Core Values</h3>
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Flexible branches representing adaptability -->
+                                    <path d="M50 20 Q30 30, 20 50 Q30 70, 50 80" stroke="#94598F" stroke-width="3" fill="none" class="flexible-branch"/>
+                                    <path d="M50 20 Q70 30, 80 50 Q70 70, 50 80" stroke="#655FA7" stroke-width="3" fill="none" class="flexible-branch"/>
+                                    <path d="M50 20 L50 80" stroke="#94598F" stroke-width="2" fill="none"/>
+                                    <!-- Connection nodes -->
+                                    <circle cx="50" cy="20" r="4" fill="#94598F"/>
+                                    <circle cx="50" cy="50" r="4" fill="#655FA7"/>
+                                    <circle cx="50" cy="80" r="4" fill="#94598F"/>
+                                    <circle cx="20" cy="50" r="3" fill="#655FA7" opacity="0.8"/>
+                                    <circle cx="80" cy="50" r="3" fill="#655FA7" opacity="0.8"/>
+                                </svg>
+                            </div>
+                            <h4>Adaptability Over Dogma</h4>
+                            <p>We believe in flexible approaches that evolve with your team's needs, not rigid frameworks that force conformity.</p>
+                        </div>
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Group of people representing team -->
+                                    <circle cx="35" cy="30" r="8" fill="#94598F"/>
+                                    <circle cx="50" cy="25" r="9" fill="#655FA7"/>
+                                    <circle cx="65" cy="30" r="8" fill="#94598F"/>
+                                    <!-- Bodies -->
+                                    <ellipse cx="35" cy="55" rx="12" ry="18" fill="#94598F" opacity="0.8" class="people-pulse"/>
+                                    <ellipse cx="50" cy="50" rx="13" ry="20" fill="#655FA7" opacity="0.9" class="people-pulse"/>
+                                    <ellipse cx="65" cy="55" rx="12" ry="18" fill="#94598F" opacity="0.8" class="people-pulse"/>
+                                    <!-- Connecting hands/support -->
+                                    <path d="M23 50 Q30 45, 37 50" stroke="#655FA7" stroke-width="2" fill="none"/>
+                                    <path d="M63 50 Q70 45, 77 50" stroke="#655FA7" stroke-width="2" fill="none"/>
+                                    <!-- Care symbol above -->
+                                    <path d="M45 15 Q47 12, 50 15 Q53 12, 55 15 Q53 18, 50 20 Q47 18, 45 15" fill="#94598F" opacity="0.6"/>
+                                </svg>
+                            </div>
+                            <h4>People Before Process</h4>
+                            <p>Human wellbeing and mental health are non-negotiable. Sustainable success starts with taking care of your team.</p>
+                        </div>
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Trophy/Achievement representing outcomes -->
+                                    <ellipse cx="50" cy="75" rx="20" ry="8" fill="#94598F" opacity="0.3"/>
+                                    <rect x="45" y="60" width="10" height="15" fill="#655FA7"/>
+                                    <path d="M30 45 Q30 35, 40 35 L60 35 Q70 35, 70 45 L65 55 Q50 60, 35 55 Z" fill="#94598F" class="trophy-glow"/>
+                                    <circle cx="50" cy="40" r="8" fill="#655FA7" opacity="0.8"/>
+                                    <!-- Handles -->
+                                    <path d="M25 40 Q20 35, 20 45 Q20 50, 25 50" stroke="#94598F" stroke-width="3" fill="none"/>
+                                    <path d="M75 40 Q80 35, 80 45 Q80 50, 75 50" stroke="#94598F" stroke-width="3" fill="none"/>
+                                    <!-- Success sparkles -->
+                                    <path d="M35 25 L37 30 L32 30 Z M37 27 L42 27 L37 32 Z" fill="#655FA7" opacity="0.6" class="sparkle"/>
+                                    <path d="M65 20 L67 25 L62 25 Z M67 22 L72 22 L67 27 Z" fill="#655FA7" opacity="0.6" class="sparkle"/>
+                                </svg>
+                            </div>  
+                            <h4>Outcomes Over Output</h4>
+                            <p>We focus on meaningful results and real value delivery, not just checking boxes or hitting arbitrary metrics.</p>
+                        </div>
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Balance scale representing equilibrium -->
+                                    <line x1="50" y1="20" x2="50" y2="70" stroke="#94598F" stroke-width="3"/>
+                                    <circle cx="50" cy="35" r="3" fill="#655FA7"/>
+                                    <!-- Left scale pan -->
+                                    <line x1="25" y1="35" x2="35" y2="35" stroke="#655FA7" stroke-width="2"/>
+                                    <path d="M25 35 Q25 40, 30 40 Q35 40, 35 35" stroke="#655FA7" stroke-width="2" fill="none"/>
+                                    <line x1="30" y1="35" x2="30" y2="30" stroke="#655FA7" stroke-width="1"/>
+                                    <!-- Right scale pan -->
+                                    <line x1="65" y1="35" x2="75" y2="35" stroke="#655FA7" stroke-width="2"/>
+                                    <path d="M65 35 Q65 40, 70 40 Q75 40, 75 35" stroke="#655FA7" stroke-width="2" fill="none"/>
+                                    <line x1="70" y1="35" x2="70" y2="30" stroke="#655FA7" stroke-width="1"/>
+                                    <!-- Base -->
+                                    <rect x="40" y="70" width="20" height="8" fill="#94598F" rx="4"/>
+                                    <!-- Growth arrows showing balance -->
+                                    <path d="M30 50 L30 45 L25 50 L30 55 L30 50" fill="#94598F" opacity="0.6" class="balance-indicator"/>
+                                    <path d="M70 50 L70 45 L75 50 L70 55 L70 50" fill="#94598F" opacity="0.6" class="balance-indicator"/>
+                                </svg>
+                            </div>
+                            <h4>Growth Through Balance</h4>
+                            <p>True agility comes from sustainable practices that enable long-term success without burning out your best people.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p>Ready to transform your project management approach? We'd love to hear from you.</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email Us</h3>
+                    <p>contactus@agnosticagility.co.uk</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">💬</div>
+                    <h3>Let's Chat</h3>
+                    <p>Schedule a consultation to discuss your needs</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🌐</div>
+                    <h3>Follow Us</h3>
+                    <p>Stay updated on our latest developments</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Agnostic Agility. Building the future of project management.</p>
+        </div>
+    </footer>
+
+    <script>
+
+
+        // Dropdown menu toggle
+        const dropdownToggle = document.getElementById('dropdownToggle');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        dropdownToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+
+        // Close dropdown when clicking on a link
+        document.querySelectorAll('.dropdown-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                dropdownMenu.classList.remove('show');
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileNav = document.getElementById('mobileNav');
+
+        mobileMenuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuToggle.contains(e.target) && !mobileNav.contains(e.target)) {
+                mobileMenuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9898de8e7096b376',t:'MTc1OTYyNDg0NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
